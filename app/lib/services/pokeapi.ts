@@ -10,7 +10,7 @@ export const pokeapi = axios.create({
   baseURL: 'https://pokeapi.co/api/v2/',
 })
 
-interface PokemonData {
+export interface PokemonData {
   name: string
   /**
    * Flavour text represents the pokemons description for the given _flavour_
