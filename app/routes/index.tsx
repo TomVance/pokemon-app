@@ -1,12 +1,14 @@
 import React from 'react'
 import { LoaderFunction, useLoaderData } from 'remix'
 
+import { fetchTranslationForPhrase } from '~/lib/services/funtranslations'
 import { isAxiosError } from '~/lib/services/helpers'
 import { fetchPokemonByName, PokemonData } from '~/lib/services/pokeapi'
 
 interface SuccessState {
   state: 'success'
   pokemon: PokemonData
+  translation: string
 }
 
 interface ErrorState {
@@ -22,8 +24,10 @@ interface PendingState {
 /**
  * Represents the different states that the UI can be in:
  *
- * - **success**: We have successfully found a pokemon and have returned its data
- * - **error**: Something went wrong searching for the pokemon, includes a message with more details
+ * - **success**: We have successfully found a pokemon and have returned its
+ *   data
+ * - **error**: Something went wrong searching for the pokemon, includes a
+ *   message with more details
  * - **pending**: We're waiting for input from the user to search for a pokemon
  **/
 type LoaderData = SuccessState | ErrorState | PendingState
@@ -42,12 +46,18 @@ export const loader: LoaderFunction = async ({
         requestUrl.searchParams.get('flavour') ?? undefined,
       )
 
+      const translatedFlavourContent = await fetchTranslationForPhrase(
+        pokemonData.flavourText.flavor_text,
+      )
+
       return {
         pokemon: pokemonData,
+        translation: translatedFlavourContent,
         state: 'success',
       }
     } catch (err) {
       if (isAxiosError(err)) {
+        console.error(err.response)
         return {
           status: err.response?.status ?? 500,
           state: 'error',
@@ -88,6 +98,7 @@ const Index: React.FC = () => {
         <h1>{props.pokemon.name}</h1>
         <img src={props.pokemon.sprites[0]} />
         <p>{props.pokemon.flavourText.flavor_text}</p>
+        <p>{props.translation}</p>
       </div>
     )
   }
