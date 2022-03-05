@@ -1,5 +1,5 @@
 import React from 'react'
-import { LoaderFunction, useLoaderData } from 'remix'
+import { Form, LoaderFunction, useLoaderData, useTransition } from 'remix'
 
 import { fetchTranslationForPhrase } from '~/lib/services/funtranslations'
 import { isAxiosError } from '~/lib/services/helpers'
@@ -82,6 +82,7 @@ export const loader: LoaderFunction = async ({
 
 const Index: React.FC = () => {
   const props = useLoaderData<LoaderData>()
+  const transition = useTransition()
 
   if (props.state === 'error') {
     return (
@@ -106,10 +107,10 @@ const Index: React.FC = () => {
   return (
     <div>
       <h1>Pokémon Search Engine</h1>
-      <form>
+      <Form>
         <input type="text" name="q" />
-        <button>Search</button>
-      </form>
+        <button>{transition.state === 'submitting' ? '....' : 'Search'}</button>
+      </Form>
     </div>
   )
 }
