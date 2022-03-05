@@ -64,3 +64,37 @@ html {
   }
 }
 
+.pokemon-card {
+  margin-top: 50px;
+  text-align: center;
+
+  .h1 {
+    margin: 10px 0;
+    text-transform: capitalize;
+  }
+
+  &__img {
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    img {
+      position: relative;
+      z-index: 1;
+    }
+
+    &::after {
+      content: ' ';
+      display: block;
+      width: 150px;
+      height: 150px;
+      background-color: var(--secondary-bg-color);
+      border: 3px solid var(--border-color);
+      position: absolute;
+      z-index: 0;
+      border-radius: 500%;
+    }
+  }
+}
