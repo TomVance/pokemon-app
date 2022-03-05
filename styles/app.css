@@ -30,6 +30,9 @@ html {
   font-family: var(--title-font);
   font-size: 18px;
 
+  &--error {
+    color: var(--error-color);
+  }
 }
 
 .search-form {
@@ -96,5 +99,14 @@ html {
       z-index: 0;
       border-radius: 500%;
     }
+  }
+}
+
+.error {
+  margin-top: 50px;
+  text-align: center;
+
+  .h1 {
+    margin: 10px 0;
   }
 }
