@@ -4,7 +4,7 @@
  */
 export namespace PokeAPI {
   interface FlavourText {
-    flavour_text: string
+    flavor_text: string
     language: {
       name: string
     }
