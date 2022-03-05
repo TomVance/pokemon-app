@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import type { FunTranslations } from '~/types/FunTranslations'
 
+import { logger } from '../logger'
 import { isAxiosError } from './helpers'
 
 export const funtranslations = axios.create({
@@ -33,7 +34,7 @@ export async function fetchTranslationForPhrase(
       // we'll hit this limit. If we do we don't want the app to fail. So lets
       // catch it and return the untranslated text.
       if (err.response?.status === 429) {
-        console.warn('Fun translations rate limit hit')
+        logger.warn('Hitting fun translations API rate limit')
 
         return phrase
       }

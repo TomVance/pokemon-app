@@ -6,6 +6,8 @@ import axios from 'axios'
 
 import type { PokeAPI } from '~/types/PokeApi'
 
+import { logger } from '../logger'
+
 export const pokeapi = axios.create({
   baseURL: 'https://pokeapi.co/api/v2/',
 })
@@ -51,7 +53,10 @@ export async function fetchPokemonByName(
    * Its likely that the caller will want some response here
    */
   if (!flavourTextForRequestedFlavour) {
-    console.log('Flavour not found')
+    logger.warn(
+      { flavour, pokemon: name },
+      'No flavour content found for pokemon',
+    )
 
     return {
       name,

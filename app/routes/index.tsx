@@ -1,14 +1,9 @@
 import React from 'react'
-import {
-  Form,
-  LoaderFunction,
-  useLoaderData,
-  useSearchParams,
-  useTransition,
-} from 'remix'
+import { LoaderFunction, useLoaderData, useSearchParams } from 'remix'
 
 import { PokemonCard } from '~/lib/components/pokemon-card/PokemonCard'
 import { SearchForm } from '~/lib/components/search-form/SearchForm'
+import { logger } from '~/lib/logger'
 import { fetchTranslationForPhrase } from '~/lib/services/funtranslations'
 import { isAxiosError } from '~/lib/services/helpers'
 import { fetchPokemonByName, PokemonData } from '~/lib/services/pokeapi'
@@ -65,7 +60,8 @@ export const loader: LoaderFunction = async ({
       }
     } catch (err) {
       if (isAxiosError(err)) {
-        console.error(err.response)
+        logger.error({ err, term: pokemonName }, 'Failed to fetch pokemon data')
+
         return {
           status: err.response?.status ?? 500,
           state: 'error',
@@ -73,6 +69,10 @@ export const loader: LoaderFunction = async ({
         }
       }
 
+      logger.error(
+        { err, term: pokemonName },
+        'Unexpected error when loading pokemon app',
+      )
       return {
         status: 500,
         state: 'error',
