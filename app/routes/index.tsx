@@ -1,6 +1,14 @@
 import React from 'react'
-import { Form, LoaderFunction, useLoaderData, useTransition } from 'remix'
+import {
+  Form,
+  LoaderFunction,
+  useLoaderData,
+  useSearchParams,
+  useTransition,
+} from 'remix'
 
+import { PokemonCard } from '~/lib/components/pokemon-card/PokemonCard'
+import { SearchForm } from '~/lib/components/search-form/SearchForm'
 import { fetchTranslationForPhrase } from '~/lib/services/funtranslations'
 import { isAxiosError } from '~/lib/services/helpers'
 import { fetchPokemonByName, PokemonData } from '~/lib/services/pokeapi'
@@ -82,35 +90,36 @@ export const loader: LoaderFunction = async ({
 
 const Index: React.FC = () => {
   const props = useLoaderData<LoaderData>()
-  const transition = useTransition()
+  const [searchParams] = useSearchParams()
 
   if (props.state === 'error') {
     return (
-      <div>
-        <h1>Error - {props.status}</h1>
-        <p>{props.message}</p>
+      <div className="wrapper">
+        <SearchForm query={searchParams.get('q')} />
+
+        <div className="error">
+          <h1 className="h1 h1--error">Uh Oh!</h1>
+          <p>{props.message}</p>
+        </div>
       </div>
     )
   }
 
   if (props.state === 'success') {
     return (
-      <div>
-        <h1>{props.pokemon.name}</h1>
-        <img src={props.pokemon.sprites[0]} />
-        <p>{props.pokemon.flavourText.flavor_text}</p>
-        <p>{props.translation}</p>
+      <div className="wrapper">
+        <SearchForm query={searchParams.get('q')} />
+        <PokemonCard
+          pokemon={props.pokemon}
+          translatedContent={props.translation}
+        />
       </div>
     )
   }
 
   return (
-    <div>
-      <h1>Pokémon Search Engine</h1>
-      <Form>
-        <input type="text" name="q" />
-        <button>{transition.state === 'submitting' ? '....' : 'Search'}</button>
-      </Form>
+    <div className="wrapper">
+      <SearchForm query={searchParams.get('q')} />
     </div>
   )
 }
