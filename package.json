@@ -12,7 +12,8 @@
     "postinstall": "remix setup node",
     "start": "cross-env NODE_ENV=production node ./build/index.js",
     "lint": "eslint ./app",
-    "prettier": "prettier ./app"
+    "prettier": "prettier ./app",
+    "test": "NODE_ENV=test mocha 'app/**/*/*{.test,_test}.ts'"
   },
   "dependencies": {
     "@remix-run/express": "^1.2.3",
@@ -28,14 +29,19 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^1.2.3",
+    "@types/mocha": "^9.1.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "eslint": "^8.10.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "expect": "^27.5.1",
+    "mocha": "^9.2.1",
+    "nock": "^13.2.4",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
+    "ts-node": "^10.6.0",
     "typescript": "^4.5.5"
   },
   "engines": {
