@@ -1,0 +1,66 @@
+:root {
+  --primary-bg-color: #cec2b8;
+  --secondary-bg-color: #f1e5d8;
+  --border-color: #7f6f62;
+  --error-color: #cc0000;
+  --text-color: #333;
+
+  --border-radius: 5px;
+
+  --title-font: 'Press Start 2P', cursive;
+  --body-font: sans-serif;
+  --body-font-size: 14px;
+}
+
+body,
+html {
+  background-color: var(--primary-bg-color);
+  font-family: var(--body-font);
+  font-size: var(--body-font-size);
+}
+
+.wrapper {
+  margin: 0 auto;
+  padding: 30px 25px 0;
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+.h1 {
+  font-family: var(--title-font);
+  font-size: 18px;
+
+}
+
+.search-form {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+
+  &__input {
+    color: var(--border-color);
+    padding: 10px 15px;
+    border: 3px solid var(--border-color);
+    border-right: none;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    background-color: var(--secondary-bg-color);
+    min-width: 244px;
+    outline: none;
+  }
+
+  &__action {
+    padding: 10px 15px;
+    border: 3px solid var(--border-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    background-color: var(--secondary-bg-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 20px;
+      stroke: var(--border-color);
+    }
+  }
+}
+
