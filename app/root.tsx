@@ -1,5 +1,5 @@
-import type { ReactElement } from "react";
-import type { MetaFunction } from "remix";
+import type { ReactElement } from 'react'
+import type { LinksFunction, MetaFunction } from 'remix'
 import {
   Links,
   LiveReload,
@@ -7,11 +7,40 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "remix";
+} from 'remix'
+
+import appStyles from '~/styles/app.css'
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
-};
+  return { title: 'New Remix App' }
+}
+
+// Include a default CSS reset for the app
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: 'https://unpkg.com/modern-css-reset@1.4.0/dist/reset.min.css',
+    },
+    {
+      rel: 'stylesheet',
+      href: appStyles,
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.googleapis.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous',
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap',
+    },
+  ]
+}
 
 export default function App(): ReactElement<any, any> {
   return (
@@ -29,5 +58,5 @@ export default function App(): ReactElement<any, any> {
         <LiveReload />
       </body>
     </html>
-  );
+  )
 }
