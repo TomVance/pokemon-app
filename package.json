@@ -15,7 +15,7 @@
     "prettier": "prettier ./app",
     "test": "run-p test:*",
     "test:unit": "NODE_ENV=test mocha 'app/**/*/*{.test,_test}.ts'",
-    "test:integration": "cypress run",
+    "test:e2e": "cypress run",
     "cypress:open": "cypress open",
     "dev:css": "postcss styles --base styles --dir app/styles -w",
     "build:css": "postcss styles --base styles --dir app/styles --env production"

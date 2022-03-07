@@ -61,7 +61,9 @@ describe('Pokeapi', () => {
               name: 'yellow',
             },
           },
-          sprites: ['https://test.img'],
+          sprites: {
+            main_image: 'https://test.img',
+          },
         })
       })
     })
@@ -108,7 +110,9 @@ describe('Pokeapi', () => {
               name: 'red',
             },
           },
-          sprites: ['https://test.img'],
+          sprites: {
+            main_image: 'https://test.img',
+          },
         })
       })
     })

@@ -19,7 +19,7 @@ export interface PokemonData {
    * (version) of pokemon. for example "red", "emerald", etc...
    */
   flavourText: PokeAPI.PokemonSpecies['flavor_text_entries'][number]
-  sprites: string[]
+  sprites: Record<string, string>
 }
 
 /**
@@ -34,7 +34,6 @@ export async function fetchPokemonByName(
   const { data: pokemonData } = await pokeapi.get<PokeAPI.Pokemon>(
     `pokemon/${name}`,
   )
-  const sprites = Object.values(pokemonData.sprites)
 
   const { data: speciesData } = await pokeapi.get<PokeAPI.PokemonSpecies>(
     `pokemon-species/${pokemonData.id}`,
@@ -61,13 +60,13 @@ export async function fetchPokemonByName(
     return {
       name,
       flavourText: speciesData.flavor_text_entries[0],
-      sprites,
+      sprites: pokemonData.sprites,
     }
   }
 
   return {
     name,
     flavourText: flavourTextForRequestedFlavour,
-    sprites,
+    sprites: pokemonData.sprites,
   }
 }

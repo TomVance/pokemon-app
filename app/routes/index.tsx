@@ -1,5 +1,11 @@
 import React from 'react'
-import { LoaderFunction, useLoaderData, useSearchParams } from 'remix'
+import {
+  Form,
+  LoaderFunction,
+  useLoaderData,
+  useSearchParams,
+  useTransition,
+} from 'remix'
 
 import { PokemonCard } from '~/lib/components/pokemon-card/PokemonCard'
 import { SearchForm } from '~/lib/components/search-form/SearchForm'
@@ -90,12 +96,18 @@ export const loader: LoaderFunction = async ({
 
 const Index: React.FC = () => {
   const props = useLoaderData<LoaderData>()
+  const searchTransition = useTransition()
   const [searchParams] = useSearchParams()
 
   if (props.state === 'error') {
     return (
       <div className="wrapper">
-        <SearchForm query={searchParams.get('q')} />
+        <Form className="search-form">
+          <SearchForm
+            query={searchParams.get('q')}
+            state={searchTransition.state}
+          />
+        </Form>
 
         <div className="error">
           <h1 className="h1 h1--error">Uh Oh!</h1>
@@ -108,10 +120,16 @@ const Index: React.FC = () => {
   if (props.state === 'success') {
     return (
       <div className="wrapper">
-        <SearchForm query={searchParams.get('q')} />
+        <Form className="search-form">
+          <SearchForm
+            query={searchParams.get('q')}
+            state={searchTransition.state}
+          />
+        </Form>
         <PokemonCard
           pokemon={props.pokemon}
           translatedContent={props.translation}
+          isLoading={searchTransition.state === 'submitting'}
         />
       </div>
     )
@@ -119,7 +137,12 @@ const Index: React.FC = () => {
 
   return (
     <div className="wrapper">
-      <SearchForm query={searchParams.get('q')} />
+      <Form className="search-form">
+        <SearchForm
+          query={searchParams.get('q')}
+          state={searchTransition.state}
+        />
+      </Form>
     </div>
   )
 }

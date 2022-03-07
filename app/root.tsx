@@ -12,7 +12,7 @@ import {
 import appStyles from '~/styles/app.css'
 
 export const meta: MetaFunction = () => {
-  return { title: 'New Remix App' }
+  return { title: 'Pokemon Search' }
 }
 
 // Include a default CSS reset for the app

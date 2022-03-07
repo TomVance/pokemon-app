@@ -1,17 +1,13 @@
 import React from 'react'
-import { Form, useTransition } from 'remix'
-
-import { Icon } from '../icon/Icon'
 
 interface SearchFormProps {
   query: string | null
+  state: 'idle' | 'submitting' | 'loading'
 }
 
-export const SearchForm: React.FC<SearchFormProps> = ({ query }) => {
-  const transition = useTransition()
-
+export const SearchForm: React.FC<SearchFormProps> = ({ query, state }) => {
   return (
-    <Form className="search-form">
+    <>
       <input
         type="text"
         name="q"
@@ -19,9 +15,9 @@ export const SearchForm: React.FC<SearchFormProps> = ({ query }) => {
         defaultValue={query ?? ''}
       />
       <button className="search-form__action" type="submit">
-        {transition.state === 'submitting' ? <Searching /> : <Search />}
+        {state === 'submitting' ? <Searching /> : <Search />}
       </button>
-    </Form>
+    </>
   )
 }
 

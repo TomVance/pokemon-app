@@ -1,59 +1,87 @@
-# Welcome to Remix!
+# Pokemon Translator App
 
-- [Remix Docs](https://remix.run/docs)
+This app is designed to allow you to search for a pokemon and get back its description in a shakespearean form. To do this we use the [PokeAPI](https://pokeapi.co/) and the [FunTranslations](https://funtranslations.com/) API.
 
-## Development
+# Contents
 
-You'll need to run two terminals (or bring in a process manager like concurrently/pm2-dev if you like):
+- [Getting started](#getting-started)
+  - [With docker](#with-docker)
+  - [Local configuration](#local-configuration)
+- [Tech Stack](#tech-stack)
 
-Start the Remix development asset server
+# Getting started
 
-```sh
+This project is built using Node v17.0.0 which can be downloaded and installed from their website: [https://nodejs.org/en/downloads](https://nodejs.org/en/downloads).
+
+Once installed you will need to install the required dependencies as indicated within the `package.json` file:
+
+With yarn:
+
+```bash
+cd pokemon-app
+yarn install
+```
+
+With NPM:
+
+```bash
+cd pokemon-app
+npm install
+```
+
+Once the dependencies have been installed you can go ahead and run the project:
+
+With yarn:
+
+```bash
+yarn dev
+```
+
+With NPM:
+
+```bash
 npm run dev
 ```
 
-In a new tab start your express app:
+Your console output will indicate to you which url to visit, however it should match: http://localhost:8080 (depending on the PORT number listed in your .env file, see local configuration below).
 
-```sh
-npm run start:dev
+As well as this we also ship a Dockerfile that will allow you to get the project up and running quickly. To use this make sure you have Docker installed [Docker desktop](https://www.docker.com/products/docker-desktop).
+
+## With Docker
+
+You can then run the docker project from your local machine using:
+
+```bash
+docker build . -t <your-username>/pokemon-app
+docker run -p 5000:8080 -d <your-username>/pokemon-app
 ```
 
-This starts your app in development mode, which will purge the server require cache when Remix rebuilds assets so you don't need a process manager restarting the express server.
+And visiting the url: http://localhost:5000
 
-## Deployment
+## Local configuration
 
-First, build your app for production:
+Depending on your system you may not be able to run this project on its default port of 8080, no worries! If you do need to change this, you can open up the `.env` file at the root of this project change the PORT number to something that works for you.
 
-```sh
-npm run build
+# Running the test suit
+
+The application comes with two test suits, unit tests written using mocha and end to end tests for the UI written using cypress.
+
+Each of these can be run independently or together in parallel:
+
+```bash
+npm run test
+npm run test:e2e
+npm run test:unit
 ```
 
-Then run the app in production mode:
+**NOTE::** when running the e2e tests you must also have the application running in another terminal tab (see above for running locally)
 
-```sh
-npm start
-```
+# Tech stack
 
-Now you'll need to pick a host to deploy it to.
+This project is built using the [Remix Run](https://remix.run) framework. Using React and Express under the hood. Remix is a great fullstack framework allowing for performant server side rendering and progressive enhancement.
 
-### DIY
+Utilizing this framework comes with many benefits, such as fast first time renders, co-location of logic and UI and smooth routes to progressive enhancement. For example, try this app with JS turned off it will still continue to work as it does with JS enabled.
 
-If you're familiar with deploying express applications you should be right at home just make sure to deploy the output of `remix build`
+For more on Remix and why its a great choice for modern app development checkout their docs [Remix Run](https://remix.run).
 
-- `server/build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+We also use other technologies throughout the project, such as Mocha and Cypress for testing. PostCSS for css generation and eslint/prettier for formatting and linting.
